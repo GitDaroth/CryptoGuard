@@ -1,6 +1,8 @@
 # CryptoGuard
 
-CryptoGuard is a password management application. I do not recommend to use CryptoGuard for your password management because I cannot quarantee total security. The purpose of this project is to teach myself the basics of cryptography (encryption, hashing, ...).
+CryptoGuard is a password management application. 
+I do not recommend to use CryptoGuard for your password management because I cannot guarantee total security. 
+The purpose of this project is to teach myself the basics of cryptography (encryption, hashing, ...).
 
 **Features:**
 - AES256 encryption and decryption
