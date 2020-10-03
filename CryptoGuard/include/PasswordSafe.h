@@ -22,6 +22,7 @@ public:
 	bool changeMasterPassword(const std::string& oldMasterPassword, const std::string& newMasterPassword);
 	void setLabel(const std::string& label);
 
+	bool isValid() const;
 	const std::string& getLabel() const;
 	int getPasswordEntryCount() const;
 	QVector<PasswordEntry*> getPasswordEntries();
@@ -30,6 +31,7 @@ public:
 	void writeToFile(const std::string& filePath);
 
 private:
+	bool m_isValid;
 	std::string m_label;
 	std::string m_masterPasswordSalt;
 	std::string m_hashedMasterPassword;

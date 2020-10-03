@@ -31,7 +31,13 @@ set(hashingFiles
 set(uiFiles
 	include/UI/MainWindow.ui
 	include/UI/MainWindow.h
-	src/UI/MainWindow.cpp)
+	src/UI/MainWindow.cpp
+	include/UI/PasswordSafeSelectionWidget.ui
+	include/UI/PasswordSafeSelectionWidget.h
+	src/UI/PasswordSafeSelectionWidget.cpp
+	include/UI/PasswordSafeWidget.ui
+	include/UI/PasswordSafeWidget.h
+	src/UI/PasswordSafeWidget.cpp)
 
 add_executable(CryptoGuard 
 	${miscFiles}

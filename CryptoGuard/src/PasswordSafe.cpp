@@ -8,6 +8,7 @@
 
 PasswordSafe::PasswordSafe(const std::string& label, const std::string& masterPassword)
 {
+	m_isValid = true;
 	m_isLocked = true;
 	m_label = label;
 
@@ -153,6 +154,11 @@ void PasswordSafe::setLabel(const std::string& label)
 	m_label = label;
 }
 
+bool PasswordSafe::isValid() const
+{
+	return m_isValid;
+}
+
 const std::string& PasswordSafe::getLabel() const
 {
 	return m_label;
@@ -170,6 +176,7 @@ QVector<PasswordEntry*> PasswordSafe::getPasswordEntries()
 
 void PasswordSafe::readFromFile(const std::string& filePath)
 {
+	m_isValid = false;
 	std::ifstream file;
 	file.open(filePath, std::ios::binary | std::ios::in);
 
@@ -226,6 +233,7 @@ void PasswordSafe::readFromFile(const std::string& filePath)
 	}
 
 	file.close();
+	m_isValid = true;
 }
 
 void PasswordSafe::writeToFile(const std::string& filePath)
