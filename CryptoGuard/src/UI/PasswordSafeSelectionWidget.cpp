@@ -1,6 +1,7 @@
 #include "UI/PasswordSafeSelectionWidget.h"
 
 #include "UI/PasswordSafeWidget.h"
+#include "UI/PasswordSafeCreationDialog.h"
 #include <QFileDialog>
 #include <iostream>
 #include <fstream>
@@ -21,20 +22,6 @@ PasswordSafeSelectionWidget::~PasswordSafeSelectionWidget()
 	m_passwordSafeMap.clear();
 }
 
-void PasswordSafeSelectionWidget::savePasswordSafeFilePaths()
-{
-	std::ofstream file;
-	file.open("pws_files.txt", std::ios::out);
-
-	if (!file.is_open())
-		return;
-
-	for (auto& passwordSafeMapEntry : m_passwordSafeMap)
-		file << passwordSafeMapEntry.first << "\n";
-
-	file.close();
-}
-
 void PasswordSafeSelectionWidget::onOpenButtonClicked()
 {
 	const QString& filePath = QFileDialog::getOpenFileName(this, tr("Open Password Safe"), "", tr("Password Safe Files (*.pws)"));
@@ -47,6 +34,20 @@ void PasswordSafeSelectionWidget::onOpenButtonClicked()
 
 void PasswordSafeSelectionWidget::onCreateButtonClicked()
 {
+	PasswordSafeCreationDialog creationDialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+	if (creationDialog.exec() == QDialog::Accepted)
+	{
+		std::string passwordSafeLabel = creationDialog.getLabel().toStdString();
+		std::string passwordSafeMasterPassword = creationDialog.getMasterPassword().toStdString();
+		std::string passwordSafeFilePath = creationDialog.getFilePath().toStdString();
+
+		PasswordSafe* passwordSafe = new PasswordSafe(passwordSafeLabel, passwordSafeMasterPassword);
+		passwordSafe->lock(passwordSafeMasterPassword);
+		passwordSafe->writeToFile(passwordSafeFilePath);
+
+		m_passwordSafeMap.emplace(passwordSafeFilePath, passwordSafe);
+		updatePasswordSafeListWidget();
+	}
 }
 
 void PasswordSafeSelectionWidget::connectUiEvents()
@@ -65,6 +66,20 @@ void PasswordSafeSelectionWidget::readPasswordSafeFile(const QString& filePath)
 		m_passwordSafeMap.emplace(filePath.toStdString(), passwordSafe);
 	else
 		delete passwordSafe;
+}
+
+void PasswordSafeSelectionWidget::savePasswordSafeFilePaths()
+{
+	std::ofstream file;
+	file.open("pws_files.txt", std::ios::out);
+
+	if (!file.is_open())
+		return;
+
+	for (auto& passwordSafeMapEntry : m_passwordSafeMap)
+		file << passwordSafeMapEntry.first << "\n";
+
+	file.close();
 }
 
 void PasswordSafeSelectionWidget::openKnownPasswordSafeFiles()
@@ -102,4 +117,6 @@ void PasswordSafeSelectionWidget::updatePasswordSafeListWidget()
 	}
 
 	m_ui.passwordSafeList->sortItems();
+
+	savePasswordSafeFilePaths();
 }

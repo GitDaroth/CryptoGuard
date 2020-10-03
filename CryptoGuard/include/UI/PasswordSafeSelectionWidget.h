@@ -13,8 +13,6 @@ public:
 	PasswordSafeSelectionWidget(QWidget* parent = nullptr);
 	~PasswordSafeSelectionWidget();
 
-	void savePasswordSafeFilePaths();
-
 private slots:
 	void onOpenButtonClicked();
 	void onCreateButtonClicked();
@@ -22,6 +20,7 @@ private slots:
 private:
 	void connectUiEvents();
 	void readPasswordSafeFile(const QString& filePath);
+	void savePasswordSafeFilePaths();
 	void openKnownPasswordSafeFiles();
 	void updatePasswordSafeListWidget();
 
