@@ -40,7 +40,13 @@ set(uiFiles
 	src/UI/PasswordSafeWidget.cpp
 	include/UI/PasswordSafeCreationDialog.ui
 	include/UI/PasswordSafeCreationDialog.h
-	src/UI/PasswordSafeCreationDialog.cpp)
+	src/UI/PasswordSafeCreationDialog.cpp
+	include/UI/PasswordSafeUnlockDialog.ui
+	include/UI/PasswordSafeUnlockDialog.h
+	src/UI/PasswordSafeUnlockDialog.cpp
+	include/UI/PasswordSafeEditDialog.ui
+	include/UI/PasswordSafeEditDialog.h
+	src/UI/PasswordSafeEditDialog.cpp)
 
 add_executable(CryptoGuard 
 	${miscFiles}

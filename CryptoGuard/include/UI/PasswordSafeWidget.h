@@ -14,7 +14,19 @@ public:
 
 	PasswordSafe* getPasswordSafe();
 
+signals:
+	void passwordSafeEdited(PasswordSafe* passwordSafe);
+	void removePasswordSafeTriggered(PasswordSafe* passwordSafe);
+
+private slots:
+	void onLockUnlockButtonToggled(bool checked);
+	void onEditButtonClicked();
+	void onRemoveButtonClicked();
+
 private:
+	void connectUiEvents();
+
 	Ui::PasswordSafeWidget m_ui;
 	PasswordSafe* m_passwordSafe;
+	std::string m_masterPassword;
 };

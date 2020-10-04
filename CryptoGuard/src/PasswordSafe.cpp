@@ -94,8 +94,7 @@ bool PasswordSafe::lock(const std::string& masterPassword)
 	if(m_isLocked)
 		return false;
 
-	std::string hashedMasterPassword = Scrypt::hash(masterPassword, m_masterPasswordSalt);
-	if(m_hashedMasterPassword != hashedMasterPassword)
+	if(!isMasterPasswordCorrect(masterPassword))
 		return false;
 
 	for(PasswordEntry* entry : m_passwordEntries)
@@ -110,8 +109,7 @@ bool PasswordSafe::unlock(const std::string& masterPassword)
 	if(!m_isLocked)
 		return false;
 
-	std::string hashedMasterPassword = Scrypt::hash(masterPassword, m_masterPasswordSalt);
-	if(m_hashedMasterPassword != hashedMasterPassword)
+	if (!isMasterPasswordCorrect(masterPassword))
 		return false;
 
 	for(PasswordEntry* entry : m_passwordEntries)
@@ -123,8 +121,7 @@ bool PasswordSafe::unlock(const std::string& masterPassword)
 
 bool PasswordSafe::changeMasterPassword(const std::string& oldMasterPassword, const std::string& newMasterPassword)
 {
-	std::string hashedMasterPassword = Scrypt::hash(oldMasterPassword, m_masterPasswordSalt);
-	if(m_hashedMasterPassword != hashedMasterPassword)
+	if (!isMasterPasswordCorrect(oldMasterPassword))
 		return false;
 
 	// Generate new Salt for MasterPassword 64 Bytes
@@ -154,9 +151,22 @@ void PasswordSafe::setLabel(const std::string& label)
 	m_label = label;
 }
 
+bool PasswordSafe::isMasterPasswordCorrect(const std::string& masterPassword) const
+{
+	std::string hashedMasterPassword = Scrypt::hash(masterPassword, m_masterPasswordSalt);
+	if (m_hashedMasterPassword != hashedMasterPassword)
+		return false;
+	return true;
+}
+
 bool PasswordSafe::isValid() const
 {
 	return m_isValid;
+}
+
+bool PasswordSafe::isLocked() const
+{
+	return m_isLocked;
 }
 
 const std::string& PasswordSafe::getLabel() const

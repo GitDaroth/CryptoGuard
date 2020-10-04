@@ -22,7 +22,9 @@ public:
 	bool changeMasterPassword(const std::string& oldMasterPassword, const std::string& newMasterPassword);
 	void setLabel(const std::string& label);
 
+	bool isMasterPasswordCorrect(const std::string& masterPassword) const;
 	bool isValid() const;
+	bool isLocked() const;
 	const std::string& getLabel() const;
 	int getPasswordEntryCount() const;
 	QVector<PasswordEntry*> getPasswordEntries();

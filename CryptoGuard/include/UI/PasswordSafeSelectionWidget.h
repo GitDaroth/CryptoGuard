@@ -13,6 +13,10 @@ public:
 	PasswordSafeSelectionWidget(QWidget* parent = nullptr);
 	~PasswordSafeSelectionWidget();
 
+public slots:
+	void onPasswordSafeEdited(PasswordSafe* passwordSafe);
+	void onRemovePasswordSafeTriggered(PasswordSafe* passwordSafe);
+
 private slots:
 	void onOpenButtonClicked();
 	void onCreateButtonClicked();

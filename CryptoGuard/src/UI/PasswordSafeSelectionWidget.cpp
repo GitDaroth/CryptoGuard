@@ -22,6 +22,33 @@ PasswordSafeSelectionWidget::~PasswordSafeSelectionWidget()
 	m_passwordSafeMap.clear();
 }
 
+void PasswordSafeSelectionWidget::onPasswordSafeEdited(PasswordSafe* passwordSafe)
+{
+	for (auto& passwordSafeMapEntry : m_passwordSafeMap)
+	{
+		if (passwordSafe == passwordSafeMapEntry.second)
+		{
+			passwordSafe->writeToFile(passwordSafeMapEntry.first);
+			break;
+		}
+	}
+	updatePasswordSafeListWidget();
+}
+
+void PasswordSafeSelectionWidget::onRemovePasswordSafeTriggered(PasswordSafe* passwordSafe)
+{
+	for (auto& passwordSafeMapEntry : m_passwordSafeMap)
+	{
+		if (passwordSafe == passwordSafeMapEntry.second)
+		{
+			delete passwordSafe;
+			m_passwordSafeMap.erase(passwordSafeMapEntry.first);
+			break;
+		}
+	}
+	updatePasswordSafeListWidget();
+}
+
 void PasswordSafeSelectionWidget::onOpenButtonClicked()
 {
 	const QString& filePath = QFileDialog::getOpenFileName(this, tr("Open Password Safe"), "", tr("Password Safe Files (*.pws)"));
@@ -34,7 +61,8 @@ void PasswordSafeSelectionWidget::onOpenButtonClicked()
 
 void PasswordSafeSelectionWidget::onCreateButtonClicked()
 {
-	PasswordSafeCreationDialog creationDialog(this, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint);
+	Qt::WindowFlags flags = Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::MSWindowsFixedSizeDialogHint;
+	PasswordSafeCreationDialog creationDialog(this, flags);
 	if (creationDialog.exec() == QDialog::Accepted)
 	{
 		std::string passwordSafeLabel = creationDialog.getLabel().toStdString();
@@ -114,6 +142,9 @@ void PasswordSafeSelectionWidget::updatePasswordSafeListWidget()
 		listItem->setTextColor(QColor(0, 0, 0, 0));
 		listItem->setFlags(listItem->flags() & ~Qt::ItemIsSelectable);
 		listItem->setSizeHint(passwordSafeWidget->sizeHint());
+
+		connect(passwordSafeWidget, &PasswordSafeWidget::removePasswordSafeTriggered, this, &PasswordSafeSelectionWidget::onRemovePasswordSafeTriggered);
+		connect(passwordSafeWidget, &PasswordSafeWidget::passwordSafeEdited, this, &PasswordSafeSelectionWidget::onPasswordSafeEdited);
 	}
 
 	m_ui.passwordSafeList->sortItems();
