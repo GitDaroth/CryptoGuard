@@ -55,9 +55,15 @@ void PasswordSafeEditDialog::onGeneratePasswordButtonClicked()
 {
 }
 
+void PasswordSafeEditDialog::onMasterPasswordChanged(const QString& password)
+{
+	m_ui.passwordStrengthWidget->updatePasswordStrength(password);
+}
+
 void PasswordSafeEditDialog::connectUiEvents()
 {
 	connect(m_ui.editButton, &QPushButton::clicked, this, &PasswordSafeEditDialog::onEditButtonClicked);
 	connect(m_ui.cancelButton, &QPushButton::clicked, this, &PasswordSafeEditDialog::onCancelButtonClicked);
 	connect(m_ui.generatePasswordButton, &QToolButton::clicked, this, &PasswordSafeEditDialog::onGeneratePasswordButtonClicked);
+	connect(m_ui.newMasterPasswordLineEdit, &QLineEdit::textChanged, this, &PasswordSafeEditDialog::onMasterPasswordChanged);
 }

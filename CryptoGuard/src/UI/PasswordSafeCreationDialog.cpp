@@ -59,10 +59,16 @@ void PasswordSafeCreationDialog::onGeneratePasswordButtonClicked()
 {
 }
 
+void PasswordSafeCreationDialog::onMasterPasswordChanged(const QString& password)
+{
+	m_ui.passwordStrengthWidget->updatePasswordStrength(password);
+}
+
 void PasswordSafeCreationDialog::connectUiEvents()
 {
 	connect(m_ui.createButton, &QPushButton::clicked, this, &PasswordSafeCreationDialog::onCreateButtonClicked);
 	connect(m_ui.cancelButton, &QPushButton::clicked, this, &PasswordSafeCreationDialog::onCancelButtonClicked);
 	connect(m_ui.selectFilePathButton, &QToolButton::clicked, this, &PasswordSafeCreationDialog::onSelectFilePathButtonClicked);
 	connect(m_ui.generatePasswordButton, &QToolButton::clicked, this, &PasswordSafeCreationDialog::onGeneratePasswordButtonClicked);
+	connect(m_ui.masterPasswordLineEdit, &QLineEdit::textChanged, this, &PasswordSafeCreationDialog::onMasterPasswordChanged);
 }

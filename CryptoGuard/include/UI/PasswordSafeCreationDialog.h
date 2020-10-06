@@ -20,6 +20,7 @@ public slots:
 	void onCancelButtonClicked();
 	void onSelectFilePathButtonClicked();
 	void onGeneratePasswordButtonClicked();
+	void onMasterPasswordChanged(const QString& password);
 
 private:
 	void connectUiEvents();
