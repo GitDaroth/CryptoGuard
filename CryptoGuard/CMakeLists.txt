@@ -1,3 +1,6 @@
+add_subdirectory(3rdParty/zxcvbn)
+set_target_properties(zxcvbn PROPERTIES FOLDER 3rdParty)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -59,5 +62,5 @@ source_group("\\Encryption" FILES ${encryptionFiles})
 source_group("\\Hashing" FILES ${hashingFiles})
 source_group("\\UI" FILES ${uiFiles})
 
-target_link_libraries(CryptoGuard PRIVATE Qt5::Core Qt5::Widgets Qt5::Gui)
+target_link_libraries(CryptoGuard PRIVATE Qt5::Core Qt5::Widgets Qt5::Gui zxcvbn)
 target_include_directories(CryptoGuard PUBLIC "include")

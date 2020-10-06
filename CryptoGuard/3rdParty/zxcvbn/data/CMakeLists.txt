@@ -1,0 +1,1 @@
+add_executable(zxcvbn-dict-gen dict-generate.cpp)
