@@ -1,5 +1,6 @@
 #include "UI/PasswordSafeEditDialog.h"
 
+#include "Utils.h"
 #include <QFileDialog>
 
 PasswordSafeEditDialog::PasswordSafeEditDialog(PasswordSafe* passwordSafe, QWidget* parent, Qt::WindowFlags flags) :
@@ -53,6 +54,9 @@ void PasswordSafeEditDialog::onCancelButtonClicked()
 
 void PasswordSafeEditDialog::onGeneratePasswordButtonClicked()
 {
+	std::string password = Utils::generatePassword(12);
+	m_ui.newMasterPasswordLineEdit->setText(QString::fromStdString(password));
+	m_ui.repeatNewPasswordLineEdit->setText(QString::fromStdString(password));
 }
 
 void PasswordSafeEditDialog::onMasterPasswordChanged(const QString& password)

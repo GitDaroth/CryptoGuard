@@ -1,5 +1,6 @@
 #include "UI/PasswordSafeCreationDialog.h"
 
+#include "Utils.h"
 #include <QFileDialog>
 
 PasswordSafeCreationDialog::PasswordSafeCreationDialog(QWidget* parent, Qt::WindowFlags flags) :
@@ -57,6 +58,9 @@ void PasswordSafeCreationDialog::onSelectFilePathButtonClicked()
 
 void PasswordSafeCreationDialog::onGeneratePasswordButtonClicked()
 {
+	std::string password = Utils::generatePassword(12);
+	m_ui.masterPasswordLineEdit->setText(QString::fromStdString(password));
+	m_ui.repeatPasswordLineEdit->setText(QString::fromStdString(password));
 }
 
 void PasswordSafeCreationDialog::onMasterPasswordChanged(const QString& password)
