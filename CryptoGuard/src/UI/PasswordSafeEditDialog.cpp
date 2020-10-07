@@ -59,6 +59,48 @@ void PasswordSafeEditDialog::onGeneratePasswordButtonClicked()
 	m_ui.repeatNewPasswordLineEdit->setText(QString::fromStdString(password));
 }
 
+void PasswordSafeEditDialog::onOldMasterPasswordShowHideButtonToggled(bool checked)
+{
+	if (checked)
+	{
+		m_ui.oldMasterPasswordShowHideButton->setText("hide");
+		m_ui.oldMasterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Normal);
+	}
+	else
+	{
+		m_ui.oldMasterPasswordShowHideButton->setText("show");
+		m_ui.oldMasterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+	}
+}
+
+void PasswordSafeEditDialog::onNewMasterPasswordShowHideButtonToggled(bool checked)
+{
+	if (checked)
+	{
+		m_ui.newMasterPasswordShowHideButton->setText("hide");
+		m_ui.newMasterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Normal);
+	}
+	else
+	{
+		m_ui.newMasterPasswordShowHideButton->setText("show");
+		m_ui.newMasterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+	}
+}
+
+void PasswordSafeEditDialog::onRepeatNewMasterPasswordShowHideButtonToggled(bool checked)
+{
+	if (checked)
+	{
+		m_ui.repeatNewPasswordShowHideButton->setText("hide");
+		m_ui.repeatNewPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Normal);
+	}
+	else
+	{
+		m_ui.repeatNewPasswordShowHideButton->setText("show");
+		m_ui.repeatNewPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+	}
+}
+
 void PasswordSafeEditDialog::onMasterPasswordChanged(const QString& password)
 {
 	m_ui.passwordStrengthWidget->updatePasswordStrength(password);
@@ -69,5 +111,8 @@ void PasswordSafeEditDialog::connectUiEvents()
 	connect(m_ui.editButton, &QPushButton::clicked, this, &PasswordSafeEditDialog::onEditButtonClicked);
 	connect(m_ui.cancelButton, &QPushButton::clicked, this, &PasswordSafeEditDialog::onCancelButtonClicked);
 	connect(m_ui.generatePasswordButton, &QToolButton::clicked, this, &PasswordSafeEditDialog::onGeneratePasswordButtonClicked);
+	connect(m_ui.oldMasterPasswordShowHideButton, &QToolButton::toggled, this, &PasswordSafeEditDialog::onOldMasterPasswordShowHideButtonToggled);
+	connect(m_ui.newMasterPasswordShowHideButton, &QToolButton::toggled, this, &PasswordSafeEditDialog::onNewMasterPasswordShowHideButtonToggled);
+	connect(m_ui.repeatNewPasswordShowHideButton, &QToolButton::toggled, this, &PasswordSafeEditDialog::onRepeatNewMasterPasswordShowHideButtonToggled);
 	connect(m_ui.newMasterPasswordLineEdit, &QLineEdit::textChanged, this, &PasswordSafeEditDialog::onMasterPasswordChanged);
 }

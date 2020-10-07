@@ -20,6 +20,9 @@ public slots:
 	void onEditButtonClicked();
 	void onCancelButtonClicked();
 	void onGeneratePasswordButtonClicked();
+	void onOldMasterPasswordShowHideButtonToggled(bool checked);
+	void onNewMasterPasswordShowHideButtonToggled(bool checked);
+	void onRepeatNewMasterPasswordShowHideButtonToggled(bool checked);
 	void onMasterPasswordChanged(const QString& password);
 
 private:

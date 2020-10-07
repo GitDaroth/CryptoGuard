@@ -63,6 +63,34 @@ void PasswordSafeCreationDialog::onGeneratePasswordButtonClicked()
 	m_ui.repeatPasswordLineEdit->setText(QString::fromStdString(password));
 }
 
+void PasswordSafeCreationDialog::onMasterPasswordShowHideButtonToggled(bool checked)
+{
+	if (checked)
+	{
+		m_ui.masterPasswordShowHideButton->setText("hide");
+		m_ui.masterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Normal);
+	}
+	else
+	{
+		m_ui.masterPasswordShowHideButton->setText("show");
+		m_ui.masterPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+	}
+}
+
+void PasswordSafeCreationDialog::onRepeatMasterPasswordShowHideButtonToggled(bool checked)
+{
+	if (checked)
+	{
+		m_ui.repeatPasswordShowHideButton->setText("hide");
+		m_ui.repeatPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Normal);
+	}
+	else
+	{
+		m_ui.repeatPasswordShowHideButton->setText("show");
+		m_ui.repeatPasswordLineEdit->setEchoMode(QLineEdit::EchoMode::Password);
+	}
+}
+
 void PasswordSafeCreationDialog::onMasterPasswordChanged(const QString& password)
 {
 	m_ui.passwordStrengthWidget->updatePasswordStrength(password);
@@ -74,5 +102,7 @@ void PasswordSafeCreationDialog::connectUiEvents()
 	connect(m_ui.cancelButton, &QPushButton::clicked, this, &PasswordSafeCreationDialog::onCancelButtonClicked);
 	connect(m_ui.selectFilePathButton, &QToolButton::clicked, this, &PasswordSafeCreationDialog::onSelectFilePathButtonClicked);
 	connect(m_ui.generatePasswordButton, &QToolButton::clicked, this, &PasswordSafeCreationDialog::onGeneratePasswordButtonClicked);
+	connect(m_ui.masterPasswordShowHideButton, &QToolButton::toggled, this, &PasswordSafeCreationDialog::onMasterPasswordShowHideButtonToggled);
+	connect(m_ui.repeatPasswordShowHideButton, &QToolButton::toggled, this, &PasswordSafeCreationDialog::onRepeatMasterPasswordShowHideButtonToggled);
 	connect(m_ui.masterPasswordLineEdit, &QLineEdit::textChanged, this, &PasswordSafeCreationDialog::onMasterPasswordChanged);
 }
